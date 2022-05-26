@@ -1,32 +1,42 @@
+let pairNum = null;
+let cardNum = null;
+let cardArrayShuffled = [];
 let hasFlippedCard = false;
 let firstCard = undefined;
 let secondCard = undefined;
 
-function createRandomCards() {
+// Algorithm to shuffle an array
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
+
+function createGameGrid(pairNum, cardNum) {
+  $('#game_grid').empty();
   let indexArray = [];
-    // generate 3 unique random number between 1 and 898
-  while (indexArray.length < 3) {
-    let randomIndex = Math.floor(Math.random() * 898) + 1;
-    if (indexArray.indexOf(randomIndex) === -1) indexArray.push(randomIndex);
+    // generate 3 or 6 unique random numbers between 1 and 898
+  while (indexArray.length < pairNum) {
+    let random = Math.floor(Math.random() * 898) + 1;
+    if (indexArray.indexOf(random) === -1) indexArray.push(random);
   }
-  function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
   
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-  
-    return array;
+  if(pairNum == 3) {
+    cardArrayShuffled = shuffle([0, 1, 2, 0, 1, 2])
+  }else if(pairNum == 6) {
+    cardArrayShuffled = shuffle([0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5])
   }
-  let cardArrayShuffled = shuffle([0, 1, 2, 0, 1, 2]);
-  for (i = 0; i < 6; i++) {
+  for (i = 0; i < cardNum; i++) {
     $('#game_grid').append(`
       <div class="card">
         <img class="front_face" src="
@@ -34,7 +44,6 @@ function createRandomCards() {
         <img class="back_face" src="./images/back_face.jpeg" alt="">
       </div>`)
   }
-
 }
 
 function gameLogic() {
@@ -55,8 +64,17 @@ function gameLogic() {
 }
 
 function setup() {
-  createRandomCards();
-  gameLogic();
+  $('input[type=radio][name=game_board]').change(function() {
+    if (this.value == 'small') {
+      createGameGrid(3, 6);
+      gameLogic();
+    }
+    if (this.value == 'large') {
+      createGameGrid(6, 12);
+      gameLogic();
+    }
+  });
+  
 }
 
 
