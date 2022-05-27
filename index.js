@@ -62,7 +62,7 @@ function createGameGrid(pokeNum, cardNum) {
   }
 }
 
-function gameLogic() {
+function flipCard() {
   $(".card").on("click", function () {
     $(this).toggleClass("flip"); // toggleClass 是一个jQuery方法，如果有class, remove it; 如果没有, add it
 
@@ -72,20 +72,28 @@ function gameLogic() {
     } else {
       secondCard = $(this).find(".front_face")[0];
       hasFlippedCard = false;
-        // Check if cards match
-        if ($(`#${firstCard.id}`).attr("src") === $(`#${secondCard.id}`).attr("src")) {
-          console.log(`${firstCard.id}`, `${secondCard.id}`)
-          $(`#${firstCard.id}`).parent().off("click");
-          $(`#${secondCard.id}`).parent().off("click");
-        } else {
-          console.log(`${firstCard.id}`, `${secondCard.id}`)
-          setTimeout(() => {
-            $(`#${firstCard.id}`).parent().removeClass("flip");
-            $(`#${secondCard.id}`).parent().removeClass("flip");
-          }, 1000);
-        }
+      // Check if cards match
+      checkForMatch();
     }
   });
+}
+
+function checkForMatch() {
+  let isMatch =  $(`#${firstCard.id}`).attr("src") === $(`#${secondCard.id}`).attr("src");
+  
+  isMatch ? disableCards() : unflipCards()
+}
+
+function disableCards() {
+  $(`#${firstCard.id}`).parent().off("click");
+  $(`#${secondCard.id}`).parent().off("click");
+}
+
+function unflipCards() {
+  setTimeout(() => {
+    $(`#${firstCard.id}`).parent().removeClass("flip");
+    $(`#${secondCard.id}`).parent().removeClass("flip");
+  }, 1000);
 }
 
 function setup() {
@@ -96,7 +104,7 @@ function setup() {
       $("input[type=radio][name=pokemon_size]").change(function () {
         pokeNum = this.value;
         createGameGrid(pokeNum, 6);
-        gameLogic();
+        flipCard();
       });
     }
     if (this.value == "large") {
@@ -104,7 +112,7 @@ function setup() {
       $("input[type=radio][name=pokemon_size]").change(function () {
         pokeNum = this.value;
         createGameGrid(pokeNum, 12);
-        gameLogic();
+        flipCard();
       });
     }
   });
