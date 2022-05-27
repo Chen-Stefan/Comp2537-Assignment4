@@ -1,6 +1,5 @@
-let pokeNum = null;
-let cardNum = null;
-let cardArrayShuffled = [];
+let pokeNum, cardNum;
+let cardArrayShuffled;
 let hasFlippedCard = false;
 let firstCard = undefined;
 let secondCard = undefined;
@@ -31,7 +30,20 @@ function createGameGrid(pokeNum, cardNum) {
     let random = Math.floor(Math.random() * 898) + 1;
     if (indexArray.indexOf(random) === -1) indexArray.push(random);
   }
+  cardArrayShuffled = generateShuffledCardArray(pokeNum, cardNum);
+  for (i = 0; i < cardNum; i++) {
+    $("#game_grid").append(`
+      <div class="card">
+        <img id="${i + 1}" class="front_face" src="
+        https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+          indexArray[cardArrayShuffled[i]]
+        }.png" alt="">
+        <img class="back_face" src="./images/back_face.jpeg" alt="">
+      </div>`);
+  }
+}
 
+function generateShuffledCardArray(pokeNum, cardNum) {
   if (cardNum == 6) {
     if (pokeNum == 2) {
       cardArrayShuffled = shuffle([0, 1, 0, 1, 0, 1]);
@@ -50,16 +62,7 @@ function createGameGrid(pokeNum, cardNum) {
       cardArrayShuffled = shuffle([0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]);
     }
   }
-  for (i = 0; i < cardNum; i++) {
-    $("#game_grid").append(`
-      <div class="card">
-        <img id="${i + 1}" class="front_face" src="
-        https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-          indexArray[cardArrayShuffled[i]]
-        }.png" alt="">
-        <img class="back_face" src="./images/back_face.jpeg" alt="">
-      </div>`);
-  }
+  return cardArrayShuffled;
 }
 
 function flipCard() {
