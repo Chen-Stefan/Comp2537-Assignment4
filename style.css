@@ -4,19 +4,30 @@ body{
   margin: 0px;
 }
 
-#game_grid{             
+main{
+  display: flex;
+  justify-content: space-around;
+  gap: 170px;
+}
+
+#buttons {
+  flex: 13%;
+}
+
+#game_grid{  
+  flex: 80%;           
   display: flex;
   flex-wrap: wrap;
-  width: 600px;
-  height: 400px;
-  margin: auto;
+  width: 300px;
+  height: 640px;
+  margin: 20px auto;
   gap: 10px;
   perspective: 1000px;
 }
 
 /* calc 确保加了gap之后，还是3个一行 card width 和 gap加起来是33.3% */   
 .card{                     
-  width: calc(33.3% - 10px);
+  width: calc(27% - 10px);
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;

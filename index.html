@@ -13,25 +13,27 @@
 </head>
 
 <body>
-  <!-- radio buttons to choose grid size -->
-  <h3>Game Size</h3>
-  <input type="radio" id="small_grid" name="game_board" value="small">
-  <label for="small_grid">2 x 3</label><br>
-  <input type="radio" id="large_grid" name="game_board" value="large">
-  <label for="large_grid">3 x 4</label><br>
+  <main>
+    <div id="buttons">
+      <!-- radio buttons to choose grid size -->
+      <h3>Game Size</h3>
+      <input type="radio" id="small_grid" name="game_board" value="small">
+      <label for="small_grid">2 x 3</label><br>
+      <input type="radio" id="large_grid" name="game_board" value="large">
+      <label for="large_grid">4 x 3</label><br>
+      <!-- radio buttons to choose number of pokemons -->
+      <h3>Number of Pokemons</h3>
+      <input type="radio" id="two" name="pokemon_size" value="2">2<br>
+      <input type="radio" id="three" name="pokemon_size" value="3">3<br>
+      <span id="pokemon_radio">
+        <input type="radio" id="four" name="pokemon_size" value="4">4<br>
+        <input type="radio" id="six" name="pokemon_size" value="6">6<br>
+      </span>
+    </div>
+    <div id="game_grid">
 
-  <h3>Number of Pokemons</h3>
-  <input type="radio" id="two" name="pokemon_size" value="2">2<br>
-  <input type="radio" id="three" name="pokemon_size" value="3">3<br>
-  <span id="pokemon_radio">
-    <input type="radio" id="four" name="pokemon_size" value="4">4<br>
-    <input type="radio" id="six" name="pokemon_size" value="6">6<br>
-  </span>
-
-
-  <div id="game_grid">
-
-  </div>
+    </div>
+  </main>
 
 </body>
 
