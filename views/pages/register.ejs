@@ -16,7 +16,7 @@
     <div class="jumbotron">
       <h1>Register</h1>
       <%- include('../partials/messages'); %>
-      <form action="/auth/register" method="post">
+      <form action="/user/register" method="post">
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="username" name="username" placeholder="username" value="<%= typeof username == 'undefined' ? '' : username %>"required>
           <label for="username">Username</label>

@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const https = require('https');       
+const {checkAuthenticated} = require('../routes/auth')
 
-router.get('/:id', function (req, res) {   
+router.get('/:id', checkAuthenticated, function (req, res) {   
   const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
   let data = "";
   https.get(url, function(https_res) {

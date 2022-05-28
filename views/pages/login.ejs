@@ -33,7 +33,8 @@
 
         <div class="col">
           <div class="jumbotron pt-3 mt-3" style="min-width: 18rem;">
-            <form action="/auth/login" method="post">
+           <%- include('../partials/messages'); %>
+            <form action="/user/login" method="post">
               <div>
                 <div class="form-floating my-3">
                   <input type="text" class="form-control" id="username" name="username" placeholder="username" required>
@@ -45,7 +46,7 @@
                   <label for="password">Password</label>
                 </div>
                 <button type="submit" style="background-color: #350661;" class="btn btn-primary">Login</button>
-                <a href="/auth/register" class="btn btn-outline-primary" role="button">Register</a>
+                <a href="/user/register" class="btn btn-outline-primary" role="button">Register</a>
             </form>
             <span id="error-message">
 

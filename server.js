@@ -1,14 +1,16 @@
 const express = require("express");
-// var session = require("express-session")
-// const res = require("express/lib/response");
 const app = express();      
 const bodyparser = require("body-parser");
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 const dotenv = require("dotenv");
-const authRoute = require('./routes/auth');
 const userRoute = require('./routes/user');
+// const userRoute = require('./routes/olduser');
 const timelineRoute = require('./routes/timeline');
 const profileRoute = require('./routes/profile');
+const {checkAuthenticated} = require('./routes/auth');
 
 // EJS
 
@@ -20,6 +22,33 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 
+// Passport config
+require('./passport')(passport);
+
+// Express session middleware
+app.use(session({
+  secret: 'oppai',
+  resave: true,
+  saveUninitialized: true
+}))
+
+// Passport middleware
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect flash middleware
+app.use(flash());
+
+// Global variable
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+})
+
+
 // .env
 
 dotenv.config();
@@ -29,15 +58,25 @@ dotenv.config();
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Root route
+
 app.get('/', function (req, res) {
   res.render('pages/login')
 })
+
+// Landing route: render the landing page when user sucessfully logged in. Pass in the username as an object
+// to show in the welcome message after login
+
+app.get('/landing', checkAuthenticated, async(req, res) => {
+  res.render('pages/landing', {
+    username: req.user.username
+  });
+});
 
 // Routes
 
 app.use(express.json());
 app.use('/timeline', timelineRoute);
-app.use('/auth', authRoute);
+app.use('/user', userRoute);
 app.use('/user', userRoute);
 app.use('/timeline', timelineRoute);
 app.use('/profile', profileRoute);
