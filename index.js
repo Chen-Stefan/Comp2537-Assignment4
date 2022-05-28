@@ -1,8 +1,9 @@
 let pokeNum, cardNum;
 let cardArrayShuffled;
 let hasFlippedCard = false;
-let firstCard = undefined;
-let secondCard = undefined;
+let lockBoard = false;
+let firstCard = null;
+let secondCard = null;
 
 // Algorithm to shuffle an array
 function shuffle(array) {
@@ -67,7 +68,10 @@ function generateShuffledCardArray(pokeNum, cardNum) {
 
 function flipCard() {
   $(".card").on("click", function () {
-    $(this).toggleClass("flip"); // toggleClass 是一个jQuery方法，如果有class, remove it; 如果没有, add it
+    // If board is locked, stop executing the function
+    if (lockBoard) return;
+    if ($(this).find(".front_face")[0] === firstCard) return;
+    $(this).toggleClass("flip"); // toggleClass is a jQuery method，if class applied, remove it; if not, add it
 
     if (!hasFlippedCard) {
       firstCard = $(this).find(".front_face")[0];
@@ -90,13 +94,23 @@ function checkForMatch() {
 function disableCards() {
   $(`#${firstCard.id}`).parent().off("click");
   $(`#${secondCard.id}`).parent().off("click");
+  resetBoard();
 }
 
 function unflipCards() {
+  // Lock the board right after unmatch
+  lockBoard = true;
   setTimeout(() => {
     $(`#${firstCard.id}`).parent().removeClass("flip");
     $(`#${secondCard.id}`).parent().removeClass("flip");
-  }, 1000);
+    // Unlock the board when unmatched cards flip back
+    resetBoard();
+  }, 1200);
+}
+
+function resetBoard() {
+  [hasFlippedCard, lockBoard] = [false, false];
+  [firstCard, secondCard] = [null, null];
 }
 
 function setup() {
