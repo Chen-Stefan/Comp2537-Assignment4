@@ -9,7 +9,7 @@ const dotenv = require("dotenv");
 const userRoute = require('./routes/user');
 // const userRoute = require('./routes/olduser');
 const timelineRoute = require('./routes/timeline');
-const profileRoute = require('./routes/profile');
+const pokeProfileRoute = require('./routes/pokeProfile');
 const {checkAuthenticated} = require('./routes/auth');
 
 // EJS
@@ -79,7 +79,7 @@ app.use('/timeline', timelineRoute);
 app.use('/user', userRoute);
 app.use('/user', userRoute);
 app.use('/timeline', timelineRoute);
-app.use('/profile', profileRoute);
+app.use('/pokeProfile', pokeProfileRoute);
 
 
 app.listen(process.env.PORT || 5000, function (err) { 

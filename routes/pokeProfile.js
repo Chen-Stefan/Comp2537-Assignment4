@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const https = require('https');       
-const {checkAuthenticated} = require('../routes/auth')
+const {checkAuthenticated} = require('./auth')
 
 router.get('/:id', checkAuthenticated, function (req, res) {   
   const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
@@ -48,7 +48,7 @@ router.get('/:id', checkAuthenticated, function (req, res) {
               return obj_.base_stat     // 这个返回的是一个array
           })
 
-          res.render("pages/profile", {  
+          res.render("pages/pokeProfile", {  
               "id": req.params.id,
               "name": data.name,
               "hp": hpArray[0],
