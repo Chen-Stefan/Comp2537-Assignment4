@@ -16,9 +16,12 @@
     <div id='text'>
       <span style="margin-left: 35px;">Welcome to the Pokemon shop <b style="font-size:x-large; color:royalblue"><%= username %></b>! This is built using the open source RESTful API created by
           pokemon lovers wolrdwide. </span> <br> <span style="margin-left: 35px;">Feel free to search, filter and purchase the pokemon cards you like! </span>
+         
           <a href="/user/logout" class="btn btn-secondary" style="float:right">Log out</a>
     </div>
-    
+    <% if (isAdmin) { %>
+      <a  href="/admin" class="btn btn-primary mt-3 mx-5">Admin Dashboard</a>
+    <% } %>
     <div id="container">
 
     </div>

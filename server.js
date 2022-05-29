@@ -10,6 +10,7 @@ const userRoute = require('./routes/user');
 const timelineRoute = require('./routes/timeline');
 const pokeProfileRoute = require('./routes/pokeProfile');
 const userProfileRoute = require('./routes/userProfile');
+const adminRoute = require('./routes/admin');
 const {checkAuthenticated} = require('./routes/auth');
 
 // EJS
@@ -68,7 +69,8 @@ app.get('/', function (req, res) {
 
 app.get('/landing', checkAuthenticated, async(req, res) => {
   res.render('pages/landing', {
-    username: req.user.username
+    username: req.user.username,
+    isAdmin: req.user.isAdmin
   });
 });
 
@@ -80,7 +82,7 @@ app.use('/user', userRoute);
 app.use('/timeline', timelineRoute);
 app.use('/pokeProfile', pokeProfileRoute);
 app.use('/profile', userProfileRoute);
-
+app.use('/admin', adminRoute);
 
 app.listen(process.env.PORT || 5000, function (err) { 
   if(err) console.log(err);

@@ -15,7 +15,7 @@ router.get('/', checkAuthenticated, async (req, res) => {
   res.render('pages/userProfile', {
       username: req.user.username,
       email: req.user.email,
-      is_admin: req.user.is_admin? 'Yes' : 'No',
+      isAdmin: req.user.isAdmin? 'Yes' : 'No'
   });
 })
 
