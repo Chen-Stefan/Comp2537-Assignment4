@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+    <%- include('../partials/loadPokemon'); %>
+</head>
+
+<body>
+
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+
+
+  <main>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col" style="max-width: 20rem;">
+          <div class="card pt-4 my-3 mt-5">
+
+            <!-- Profile Info -->
+            <div class="d-flex flex-column align-items-center">
+              <img
+                src="https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg"
+                height="100" width="100" style="border-radius: 10rem;" />
+              <p class="text-muted mt-3" style="margin-bottom: 0;">
+                <%= username %>
+              </p>
+              <p class="text-muted mt-3">
+                <%= email %>
+              </p>
+              <!-- <div class=" d-flex mt-2"> <button class="btn1 btn-dark">Edit Profile</button> </div> -->
+              <p class="text-muted mt-1">Admin: <%= is_admin %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <%- include('../partials/footer'); %>
+  </footer>
+
+</body>
+
+</html>

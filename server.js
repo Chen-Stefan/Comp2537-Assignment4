@@ -7,9 +7,9 @@ const session = require('express-session');
 const passport = require('passport');
 const dotenv = require("dotenv");
 const userRoute = require('./routes/user');
-// const userRoute = require('./routes/olduser');
 const timelineRoute = require('./routes/timeline');
 const pokeProfileRoute = require('./routes/pokeProfile');
+const userProfileRoute = require('./routes/userProfile');
 const {checkAuthenticated} = require('./routes/auth');
 
 // EJS
@@ -30,7 +30,7 @@ app.use(session({
   secret: 'oppai',
   resave: true,
   saveUninitialized: true
-}))
+}));
 
 // Passport middleware
 
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   next();
-})
+});
 
 
 // .env
@@ -57,11 +57,11 @@ dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Root route
+// Root route, render the login page
 
 app.get('/', function (req, res) {
   res.render('pages/login')
-})
+});
 
 // Landing route: render the landing page when user sucessfully logged in. Pass in the username as an object
 // to show in the welcome message after login
@@ -72,17 +72,17 @@ app.get('/landing', checkAuthenticated, async(req, res) => {
   });
 });
 
-// Routes
+// Other routes
 
 app.use(express.json());
 app.use('/timeline', timelineRoute);
 app.use('/user', userRoute);
-app.use('/user', userRoute);
 app.use('/timeline', timelineRoute);
 app.use('/pokeProfile', pokeProfileRoute);
+app.use('/profile', userProfileRoute);
 
 
 app.listen(process.env.PORT || 5000, function (err) { 
   if(err) console.log(err);
-})  
+});
 

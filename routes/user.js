@@ -70,7 +70,7 @@ router.post('/register', async (req, res) => {
           }
         }
     }
-})
+});
 
 // Log in user
 

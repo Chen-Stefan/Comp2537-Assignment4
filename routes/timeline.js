@@ -2,11 +2,10 @@ const router = require("express").Router();
 const Timeline = require("../models/Timeline");
 // const User = require("../models/User");
 
-const {verifyToken, verifyTokenAuthorization, verifyTokenAndAdmin} = require("./verifyToken");
 
 // GET ALL TIMELINE EVENTS
 
-router.get('/getAllEvents', verifyToken, function(req, res) {
+router.get('/getAllEvents', function(req, res) {
   Timeline.find({}, function(err, timelineData){
       if (err){
         console.log("Error " + err);
@@ -19,7 +18,7 @@ router.get('/getAllEvents', verifyToken, function(req, res) {
 
 // Create A NEW EVENT 
 
-router.put('/create', verifyToken, function(req, res) {
+router.put('/create', function(req, res) {
   Timeline.create({
       'userid': '',                       // have to fill this using session record
       'text': req.body.text,
@@ -37,7 +36,7 @@ router.put('/create', verifyToken, function(req, res) {
 
 // UPDATE AN EVENT
 
-router.put('/incrementHits/:id', verifyToken, function(req, res) {
+router.put('/incrementHits/:id', function(req, res) {
   Timeline.updateOne({
       '_id': req.params.id
   }, {
@@ -54,7 +53,7 @@ router.put('/incrementHits/:id', verifyToken, function(req, res) {
 
 // DELETE A SINGLE EVENT
 
-router.delete('/delete/:id', verifyTokenAuthorization, function(req, res) {
+router.delete('/delete/:id', function(req, res) {
   Timeline.deleteOne({
       '_id': req.params.id
   }, function(err, timelineData){
@@ -69,7 +68,7 @@ router.delete('/delete/:id', verifyTokenAuthorization, function(req, res) {
 
 // CLEAR ALL EVENTS
 
-router.delete('/deleteAllEvents', verifyTokenAuthorization, function(req, res) {
+router.delete('/deleteAllEvents', function(req, res) {
   Timeline.deleteMany({}, function(err, timelineData){
       if (err){
         console.log("Error " + err);
