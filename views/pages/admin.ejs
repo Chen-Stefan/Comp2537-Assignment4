@@ -12,17 +12,17 @@
 <main>
   <div class="jumbotron">
     <h1>Admin Dashboard</h1>
-    <p>Welcome, <%= username %></p>
+    <p>Welcome, <b style="font-size:x-large; color:royalblue"><%= username %></b></p>
 
     <!-- User list view -->
     <ul>
-        <% users.forEach(function(row) { %>
+        <% users.forEach(function(user) { %>
           <li>
-            <strong><%= row.username %></strong>
-            - <%= row.email %> - Admin: <%= row.isAdmin %>
-            <form action="/admin?_method=DELETE" method="POST">
-                <button type="submit" value="<%= row.user_id %>" name="delete_id" class="btn btn-danger">Delete</button>
-            </form>
+            <strong><%= user.username %></strong>
+            - <%= user.email %> - Admin: <%= user.isAdmin ? 'Yes' : 'No' %>
+              <% if (!user.isAdmin) { %>
+                <button type="submit" class="btn btn-danger" id="<%= user._id %>" value="<%= user._id %>" name="delete_id">Delete</button>
+              <% } %>
           </li>
         <% }); %>
       </ul>
@@ -33,5 +33,23 @@
   <%- include('../partials/footer'); %>
 </footer>
 
+<script>
+  function deleteUserById() {
+    $(this).parent().remove();
+    let userID = this.id
+    $.ajax({
+        type: "DELETE",
+        url: `http://localhost:5000/admin/delete/${userID}`,
+        success: (res) => {console.log(res)}
+    })
+}
+
+function setup() {
+  $("body").on("click", ".btn-danger", deleteUserById);
+}
+
+$(document).ready(setup);
+
+</script>
 </body>
 </html>

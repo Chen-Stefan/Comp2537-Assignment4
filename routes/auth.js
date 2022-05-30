@@ -1,4 +1,4 @@
-checkAuthenticated = (req, res, next) => {
+function checkAuthenticated(req, res, next) {
   if(req.isAuthenticated()) {
     return next();
   }
@@ -6,7 +6,7 @@ checkAuthenticated = (req, res, next) => {
   res.redirect('/');
 }
 
-checkAuthenticatedAndAdmin = (req, res, next) => {
+function checkAuthenticatedAndAdmin(req, res, next) {
   if(req.isAuthenticated() && req.user.isAdmin) {
     return next();
   }

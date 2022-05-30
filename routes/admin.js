@@ -1,15 +1,13 @@
 const router = require("express").Router();
 const bodyparser = require("body-parser");
-const passport = require('passport');
 const User = require('../models/User');
-const CryptoJS = require('crypto-js');
 const {checkAuthenticatedAndAdmin} = require('./auth');
 
 router.use(bodyparser.urlencoded({
   extended: true
 }));
 
-// Loads all the users from DB and Rrenders the admin dashboard
+// Load all the users from DB and Rrenders the admin dashboard
 
 router.get('/', checkAuthenticatedAndAdmin, async (req, res) => {
   const users = await User.find();
@@ -19,6 +17,14 @@ router.get('/', checkAuthenticatedAndAdmin, async (req, res) => {
   });
 })
 
+
+// Delete user by ID and redirects to the admin page (refreshes)
+// req.body.delete_id 读取了delete button的value, 在ejs里给它赋的值就是对应user的id
+router.delete('/delete/:id', checkAuthenticatedAndAdmin, async (req, res) => {
+  await User.findByIdAndDelete(req.params.id).then(() => {   
+    res.redirect('/admin');
+  })
+})
 
 
 // Get user by ID
